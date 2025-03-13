@@ -114,14 +114,23 @@
             height: auto;
             z-index: 0;
         }
-       .bg-logo-left {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 60px;
-    opacity: 1.0;
-}
-
+        .bg-logo-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            opacity: 1.0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0, 170, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -140,7 +149,11 @@
             <p id="copyMessage">✔ Link copied to clipboard!</p>
         </div>
     </div>
-    
+
+    <footer class="footer">
+       &copy; Made by Shreeram Shinde & Team 
+    </footer>
+
     <script>
         function generateLink() {
             let username = document.getElementById('username').value;
