@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Message Link Maker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(135deg, #128C7E, #25D366);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            max-width: 450px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 255, 127, 0.5);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .whatsapp-logo {
+            display: block;
+            margin: 0 auto 15px auto;
+            width: 80px;
+        }
+        input, button {
+            padding: 14px;
+            margin-top: 10px;
+            width: 90%;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+        input::placeholder {
+            color: #ddd;
+        }
+        button {
+            background: #25D366;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #1da851;
+        }
+        #linkBox {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            width: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0, 255, 127, 0.5);
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #generatedLink {
+            word-break: break-word;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            color: #00ff99;
+            font-weight: 500;
+        }
+        .copy-btn {
+            background: #ffcc00;
+            color: #121212;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .copy-btn:hover {
+            background: #ffaa00;
+        }
+        #copyMessage {
+            color: #ffcc00;
+            margin-top: 10px;
+            display: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+            width: 300px;
+            height: auto;
+            z-index: 0;
+        }
+        .bg-logo-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            opacity: 1.0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0, 255, 127, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Background Logo" class="background-logo">
+    <img src="https://i.ibb.co/93kyrswJ/IMG-0643.png" alt="Background Logo Left" class="bg-logo-left">
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" class="whatsapp-logo">
+        <h2>WhatsApp Link Maker</h2>
+        <input type="text" id="phoneNumber" placeholder="Enter phone number (with country code)">
+        <input type="text" id="message" placeholder="Enter your message">
+        <button onclick="generateLink()">Generate Link</button>
+        
+        <div id="linkBox">
+            <p id="generatedLink"></p>
+            <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+            <p id="copyMessage">✔ Link copied to clipboard!</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+       &copy; Made by Shreeram Shinde & Team 
+    </footer>
+
+    <script>
+        function generateLink() {
+            let phone = document.getElementById('phoneNumber').value;
+            let message = document.getElementById('message').value;
+            if (phone.trim() === '' || message.trim() === '') {
+                alert('Please enter both phone number and message');
+                return;
+            }
+            let encodedMessage = encodeURIComponent(message);
+            let whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
+            
+            document.getElementById('generatedLink').innerText = whatsappURL;
+            document.getElementById('linkBox').style.display = 'block';
+        }
+
+        function copyLink() {
+            let linkText = document.getElementById('generatedLink').innerText;
+            let tempInput = document.createElement('input');
+            tempInput.value = linkText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            let copyMessage = document.getElementById('copyMessage');
+            copyMessage.style.display = 'block';
+            setTimeout(() => {
+                copyMessage.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
